@@ -13,6 +13,8 @@ jobs:
     container:
       image: alpine-latest
     steps:
+    - name: login to docker
+      run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_PASS }}
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Add python3
