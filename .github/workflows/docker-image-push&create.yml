@@ -17,11 +17,11 @@ jobs:
       run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    - name: Authenticating Docker client to AWS ECR Registry 
+    - name: Authenticating docker client to Amazon ECR registry 
       run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
-    - name: check 1
+    - name: Building docker image
       run: docker build -t ${{ github.sha }} ./app
-    - name: Tagging image to ECR repo
+    - name: Tagging image to ECR repository
       run: docker tag ${{ github.sha }} ${{ secrets.ECR_REPOSITORY }}:tag
-    - name: Docker push
+    - name: Pushing docker image
       run: docker push ${{ secrets.ECR_REPOSITORY }}:tag
