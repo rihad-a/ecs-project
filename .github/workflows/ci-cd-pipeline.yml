@@ -24,7 +24,7 @@ jobs:
     - name: Checking Docker images
       run: docker images
     - name: check 1
-      run: cd app
+      run: docker build -t threat-composer .
     - name: check 2
       run: ls
     - name: Tagging image to ECR repo
