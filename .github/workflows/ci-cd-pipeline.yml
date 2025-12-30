@@ -21,6 +21,8 @@ jobs:
       run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
     - name: login to docker
       run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_PASS }}
+    - name: Checking Docker images
+      run: docker images
     - name: Tagging image to ECR repo
       run: docker tag 5702e4b11640  ${{ secrets.ECR_REPOSITORY }}:tag
     - name: Docker push
