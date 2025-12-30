@@ -2,7 +2,8 @@ name: Push Docker Image To ECR
 
 description: Pushing an image to docker
 
-inputs:
+spec:
+  inputs:
   docker_imageid:
     type: string
     required: true
@@ -14,7 +15,7 @@ on:
 
 jobs:
   build:
-    runs on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: checkout code
       uses: actions/checkout@v3
