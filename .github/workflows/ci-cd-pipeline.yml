@@ -24,10 +24,10 @@ jobs:
     - name: Checking Docker images
       run: docker images
     - name: check 1
-      run: docker build -t threat-composer ./app
+      run: docker build -t threat-composer:${{ github.sha }} ./app
     - name: check 2
       run: ls
     - name: Tagging image to ECR repo
-      run: docker tag 5702e4b11640  ${{ secrets.ECR_REPOSITORY }}:tag
+      run: docker tag ${{ github.sha }} ${{ secrets.ECR_REPOSITORY }}:tag
     - name: Docker push
       run: docker push ${{ secrets.ECR_REPOSITORY }}:tag
