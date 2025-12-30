@@ -23,9 +23,9 @@ jobs:
       run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_PASS }}
     - name: Checking Docker images
       run: docker images
+    - name: check
+      run: cd
     - name: Tagging image to ECR repo
       run: docker tag 5702e4b11640  ${{ secrets.ECR_REPOSITORY }}:tag
     - name: Docker push
       run: docker push ${{ secrets.ECR_REPOSITORY }}:tag
-    - name: check
-     run: cd
