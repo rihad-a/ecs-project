@@ -24,7 +24,7 @@ jobs:
     - name: Checking Docker images
       run: docker images
     - name: check
-      run: pwd
+      run: ls
     - name: Tagging image to ECR repo
       run: docker tag 5702e4b11640  ${{ secrets.ECR_REPOSITORY }}:tag
     - name: Docker push
