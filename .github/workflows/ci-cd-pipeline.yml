@@ -1,4 +1,4 @@
-name: Push Docker Image To ECR
+name: Push Docker Image To ECR.
 
 description: Pushing an image to docker
 
