@@ -1,4 +1,4 @@
-name: Running a Terraform Plan
+name: Running a Terraform Init, Plan and Apply
 
 on:
   workflow_dispatch:
@@ -25,6 +25,10 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Running Terraform commands
         uses: hashicorp/setup-terraform@v3
+      - name: Running a Terraform Init  
+        run: terraform -chdir=ecs init
       - name: Running a Terraform Plan
-        run: terraform -chdir=ecs plan
+        run: terraform plan
+      - name: Running a Terraform Apply
+        run: terraform apply
 
