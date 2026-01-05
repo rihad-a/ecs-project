@@ -28,4 +28,5 @@ jobs:
       - name: Running Terraform commands
         uses: hashicorp/setup-terraform@v3
       - name: Running a Terraform init  
-        run: terraform init
+        run: terraform -chdir=ecs init
+
