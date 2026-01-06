@@ -11,9 +11,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  terraform:
-    runs-on: ubuntu-latest
+  OIDCAuthentication:
+    runs-on: ubuntu-24.04
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
 

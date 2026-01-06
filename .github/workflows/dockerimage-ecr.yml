@@ -1,23 +1,34 @@
-name: Create and push docker image to ECR repository
+name: Create and Push Image to ECR
 
 on:
   workflow_dispatch:
 
+env: 
+  AWS_REGION : "eu-west-2"
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  DockerImageBuildAndPush:
+    runs-on: ubuntu-24.04
     steps:
+
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Deploy to AWS
-      run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1.7.0
+      with:
+          role-to-assume: arn:aws:iam::291759414346:role/GitHubActionsTerraformRole
+          role-session-name: GitHubActionsTerraformRole
+          aws-region: ${{ env.AWS_REGION }}
+
     - name: Authenticating docker client to Amazon ECR registry 
       run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+
     - name: Building docker image
       run: docker build -t threat-composer ./app
+
     - name: Tagging image to ECR repository
       run: docker tag threat-composer ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
+
     - name: Pushing docker image
       run: docker push ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
