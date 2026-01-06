@@ -33,8 +33,13 @@ jobs:
       - name: Running a Terraform Init  
         run: terraform -chdir=ecs init
 
+      - name: Downloading Terraform Plan
+        uses: actions/download-artifact@v3
+        with:
+          name: tfplan
+          path: tfplan 
+
       - name: Running a Terraform Apply
-        if: github.ref == 'refs/head/main'
         run: terraform -chdir=ecs apply -auto-approve tfplan
         
 

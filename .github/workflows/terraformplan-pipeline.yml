@@ -35,6 +35,12 @@ jobs:
 
       - name: Running a Terraform Plan
         run: terraform -chdir=ecs plan -out=tfplan
+      
+      - name: Uploading Terraform Plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
+          path: tfplan
 
 
 
