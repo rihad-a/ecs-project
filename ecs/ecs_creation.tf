@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "ecs-docker" {
   memory                   = 2048
   execution_role_arn       = "${data.aws_iam_role.ecs_task_execution_role.arn}"
   container_definitions    = <<TASK_DEFINITION
-jsonencode([
+[
   {
     "name": "threat-composer",
     "image": "291759414346.dkr.ecr.eu-west-2.amazonaws.com/ecs-project:2e177e79c482bb9c74c2f948301629a1182cfec2",
@@ -28,7 +28,7 @@ jsonencode([
       "memory": 2048,
       "cpu": 1024
   }
-])
+]
 TASK_DEFINITION
 
   runtime_platform {
