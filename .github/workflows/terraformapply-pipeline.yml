@@ -40,14 +40,13 @@ jobs:
         run: terraform -chdir=ecs init
 
       - name: Downloading Terraform Plan
-        uses: actions/download-artifact@v4
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: terraformplan-pipeline.yml
           name: tfplan
           path: ./
 
       - name: Running a Terraform Apply
-        run: |
-          cd ./ 
-          terraform -chdir=ecs apply -auto-approve tfplan
+        run: terraform -chdir=ecs apply -auto-approve tfplan
         
 
