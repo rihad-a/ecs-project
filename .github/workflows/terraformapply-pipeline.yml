@@ -34,6 +34,7 @@ jobs:
         run: terraform -chdir=ecs init
 
       - name: Running a Terraform Apply
-        run: terraform -chdir=ecs apply terraform.plan 
+        if: github.ref == 'refs/head/main'
+        run: terraform -chdir=ecs apply -auto-approve tfplan
         
 
