@@ -13,6 +13,11 @@ permissions:
 jobs:
   TerraformPlan:
     runs-on: ubuntu-24.04
+    
+    defaults:
+      run:
+        shell: bash
+  
     steps:
 
       - name: Git clone the repository
@@ -25,13 +30,32 @@ jobs:
           role-session-name: GitHubActionsTerraformRole
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Setup TFLint     
+        uses: terraform-linters/setup-tflint@v3
+        with:
+         tflint_version: latest
+      
+      - name: Show version
+        run: tflint --version
+    
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+
       - name: Running Terraform commands
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.14.3"
 
       - name: Running a Terraform Init  
-        run: terraform -chdir=ecs init
+        run: terraform -chdir=ecs 
+        
+      - name: Terraform Format
+        run: terraform fmt
+    
+      - name: Terraform lint
+        run: tflint 
 
       - name: Running a Terraform Plan
         run: terraform -chdir=ecs plan -out=tfplan
