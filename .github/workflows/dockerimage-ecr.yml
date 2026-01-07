@@ -31,6 +31,20 @@ jobs:
     - name: Building docker image
       run: docker build -t threat-composer ./app
 
+    - name: Run Trivy vulnerability scan
+      uses: aquasecurity/trivy-action@0.30.0
+      with:
+          image-ref: 'threat-composer'
+          format: 'sarif'
+          exit-code: 0
+          severity: 'CRITICAL,HIGH'
+          output: 'trivy-results.sarif'
+ 
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+            sarif_file: 'trivy-results.sarif'
+
     - name: Tagging image to ECR repository
       run: docker tag threat-composer ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
 
