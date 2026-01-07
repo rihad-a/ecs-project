@@ -43,7 +43,7 @@ jobs:
           path: ./
 
       - name: Terraform Plan (json)
-        run: terraform plan -out=tfplan.bin && terraform show -json tfplan.bin > tfplan.json
+        run: terraform -chdir=ecs plan -out=tfplan.bin && terraform show -json tfplan.bin > tfplan.json
 
       - name: Run Checkov on plan
         uses: bridgecrewio/checkov-action@v12
