@@ -31,9 +31,9 @@ jobs:
           terraform_version: "1.14.3"
 
       - name: Running a Terraform Init  
-        run: terraform -chdir=ecs init
+        run: terraform -chdir=terraform/deployment init
 
       - name: Running a Terraform Destroy
-        run: terraform -chdir=ecs destroy -auto-approve
+        run: terraform -chdir=terraform/deployment destroy -auto-approve
     
 

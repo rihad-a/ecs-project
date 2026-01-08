@@ -58,7 +58,7 @@ jobs:
         run: tflint 
 
       - name: Running a Terraform Plan
-        run: terraform -chdir=ecs plan -out=tfplan -input=false
+        run: terraform -chdir=terraform/deployment plan -out=tfplan -input=false
       
       - name: Uploading Terraform Plan
         uses: actions/upload-artifact@v4
@@ -74,8 +74,8 @@ jobs:
       - name: Terraform Plan (Checkov)
         run: |
           pip install checkov
-          terraform -chdir=ecs plan -out my-tf.plan
-          terraform -chdir=ecs show -json my-tf.plan | jq '.' > my-tf.json
+          terraform -chdir=terraform/deployment plan -out my-tf.plan
+          terraform -chdir=terraform/deployment show -json my-tf.plan | jq '.' > my-tf.json
           checkov -f my-tf.json --soft-fail
 
 
