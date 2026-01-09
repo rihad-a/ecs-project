@@ -39,7 +39,11 @@ module "ecs" {
 ecs-container-name                       = var.ecs-container-name  
 ecs-image                                = var.ecs-image 
 ecs-dockerport                           = var.ecs-dockerport  
+ecs-memory                               = var.ecs-memory
+ecs-cpu                                  = var.ecs-cpu
+ecs-desiredcount                         = var.ecs-desiredcount
 application-port                         = var.application-port
+
 
   # Use these outputs
   tg_arn            = module.alb.tg_arn

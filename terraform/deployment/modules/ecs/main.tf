@@ -14,8 +14,8 @@ resource "aws_ecs_task_definition" "ecs-docker" {
   family                   = "ecs-docker"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = 1024
-  memory                   = 2048
+  cpu                      = var.ecs-cpu
+  memory                   = var.ecs-memory
   execution_role_arn       = "${data.aws_iam_role.ecs_task_execution_role.arn}"
   container_definitions    = jsonencode([
     {
@@ -43,7 +43,7 @@ resource "aws_ecs_service" "ecs-project" {
   name            = "ecs-project"
   cluster         = aws_ecs_cluster.ecs-project.id
   task_definition = aws_ecs_task_definition.ecs-docker.arn
-  desired_count   = 1
+  desired_count   = var.ecs-desiredcount
   launch_type = "FARGATE"
 
   load_balancer {

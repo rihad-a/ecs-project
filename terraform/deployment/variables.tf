@@ -83,3 +83,19 @@ variable "ecs-dockerport" {
   type        = number
   description = "The port the docker image uses"
 }
+
+variable "ecs-memory" {
+  type        = number
+  description = "The memory value for the task definition"
+}
+
+variable "ecs-cpu" {
+  type        = number
+  description = "The cpu value for the task definition"
+}
+
+variable "ecs-desiredcount" {
+  type        = number
+  description = "The number of instances for the task definition to be deployed"
+}
+

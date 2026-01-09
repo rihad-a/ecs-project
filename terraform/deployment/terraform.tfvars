@@ -28,3 +28,6 @@ subnet-map_public_ip_on_launch_private   = false
 ecs-container-name                       = "container"
 ecs-image                                = "291759414346.dkr.ecr.eu-west-2.amazonaws.com/ecs-project:latest"
 ecs-dockerport                           = 3000
+ecs-memory                               = 2048
+ecs-cpu                                  = 1024
+ecs-desiredcount                         = 1
