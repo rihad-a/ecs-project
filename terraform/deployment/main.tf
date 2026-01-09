@@ -18,9 +18,9 @@ module "alb" {
   source = "./modules/alb"
 
 
-albtg-port                               = var.albtg-port
-alb-port-1                               = var.alb-port-1
-alb-port-2                               = var.alb-port-2
+application-port                         = var.application-port
+https-port                               = var.https-port
+http-port                                = var.http-port
 
   # Use these outputs
   vpc_id            = module.aws_vpc.vpc-id
@@ -32,11 +32,12 @@ alb-port-2                               = var.alb-port-2
 module "ecs" {
   source = "./modules/ecs"
 
-ecs-container-name                       = var.ecs-container-name   
-ecs-containerport                        = var.ecs-containerport  
-ecstg-port                               = var.ecstg-port      
-ecs-port-1                               = var.ecs-port-1  
-ecs-port-2                               = var.ecs-port-2  
+ecs-container-name                       = var.ecs-container-name  
+ecs-image                                = var.ecs-image 
+ecs-dockerport                           = var.ecs-dockerport  
+application-port                         = var.application-port
+https-port                               = var.https-port
+http-port                                = var.http-port
 
   # Use these outputs
   tg_arn            = module.alb.tg_arn

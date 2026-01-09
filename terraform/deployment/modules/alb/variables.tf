@@ -1,20 +1,18 @@
-# --- ALB_TG VARIABLES ---
+# --- General ---
 
-variable "albtg-port" {
+variable "application-port" {
   type        = number
-  description = "The port for the target group"
+  description = "The port for the application"
 }
 
-# --- ALB ---
-
-variable "alb-port-1" {
+variable "https-port" {
   type        = number
-  description = "The port for the first listener (HTTPS)"
+  description = "The port for the HTTPS listener"
 }
 
-variable "alb-port-2" {
+variable "http-port" {
   type        = number
-  description = "The port for the second listener (HTTP)"
+  description = "The port for the HTTP listener"
 }
 
 # module variables

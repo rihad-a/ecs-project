@@ -1,3 +1,20 @@
+# --- General ---
+
+variable "application-port" {
+  type        = number
+  description = "The port for the application"
+}
+
+variable "https-port" {
+  type        = number
+  description = "The port for the HTTPS listener"
+}
+
+variable "http-port" {
+  type        = number
+  description = "The port for the HTTP listener"
+}
+
 # --- ecs creation ---
 
 variable "ecs-container-name" {
@@ -5,24 +22,14 @@ variable "ecs-container-name" {
   description = "The name of the container in the task definition"
 }
 
-variable "ecs-containerport" {
-  type        = number
-  description = "The port the container listens on"
+variable "ecs-image" {
+  type        = string
+  description = "The url for the latest docker image"
 }
 
-variable "ecstg-port" {
+variable "ecs-dockerport" {
   type        = number
-  description = "The port for the target group"
-}
-
-variable "ecs-port-1" {
-  type        = number
-  description = "The port for the first listener (HTTPS)"
-}
-
-variable "ecs-port-2" {
-  type        = number
-  description = "The port for the second listener (HTTP)"
+  description = "The port the docker image uses"
 }
 
 # module variables

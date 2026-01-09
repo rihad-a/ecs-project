@@ -13,7 +13,7 @@ resource "aws_lb" "terraform-alb" {
 
 resource "aws_lb_listener" "alb_listener_https" {
    load_balancer_arn    = aws_lb.terraform-alb.id
-   port                 = var.alb-port-1
+   port                 = 443
    protocol             = "HTTPS"
    certificate_arn = var.certificate_arn
    default_action {
@@ -22,14 +22,9 @@ resource "aws_lb_listener" "alb_listener_https" {
   }
 }
 
-resource "aws_lb_listener_certificate" "https" {
-  listener_arn    = aws_lb_listener.alb_listener_https.arn
-  certificate_arn = var.certificate_arn
-}
-
 resource "aws_lb_listener" "alb_listener_http" {
   load_balancer_arn = aws_lb.terraform-alb.arn
-  port              = var.alb-port-2
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -45,7 +40,7 @@ resource "aws_lb_listener" "alb_listener_http" {
 
 resource "aws_lb_target_group" "alb-tg" {
   name     = "alb-tg"
-  port     = var.albtg-port
+  port     = var.application-port
   target_type = "ip" 
   protocol = "HTTP"
 
@@ -57,22 +52,22 @@ resource "aws_security_group" "sg1" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port        = var.alb-port-2
-    to_port          = var.alb-port-2
+    from_port        = var.http-port
+    to_port          = var.http-port
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }  
 
   ingress {
-    from_port        = var.alb-port-1
-    to_port          = var.alb-port-1
+    from_port        = var.https-port
+    to_port          = var.https-port
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }  
 
   ingress {
-    from_port        = var.albtg-port
-    to_port          = var.albtg-port
+    from_port        = var.application-port
+    to_port          = var.application-port
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }  

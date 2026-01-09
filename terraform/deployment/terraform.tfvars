@@ -1,12 +1,8 @@
 # --- General ---
 domain_name                              = "networking.rihad.co.uk"
-
-# --- ALB_TG VARIABLES ---
-albtg-port                               = 3000
-
-# --- ALB ---
-alb-port-1                               = 443
-alb-port-2                               = 80
+application-port                         = 3000
+https-port                               = 443
+http-port                                = 80
 
 # --- aws vpc ---
 vpc-cidr                                 = "10.0.0.0/16"
@@ -21,8 +17,6 @@ subnet-map_public_ip_on_launch_public    = true
 subnet-map_public_ip_on_launch_private   = false
 
 # --- ecs creation ---
-ecs-container-name                       = "threat-composer"
-ecs-containerport                        = 3000
-ecstg-port                               = 3000
-ecs-port-1                               = 443
-ecs-port-2                               = 80
+ecs-container-name                       = "container"
+ecs-image                                = "291759414346.dkr.ecr.eu-west-2.amazonaws.com/ecs-project:latest"
+ecs-dockerport                           = 3000
