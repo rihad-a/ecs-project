@@ -1,7 +1,11 @@
+# Obtaining the existing Route53 hosted zone
+
 data "aws_route53_zone" "selected" {
   name         = var.domain_name
   private_zone = false
 }
+
+# Creating a Route53 record
 
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.selected.zone_id
@@ -16,6 +20,8 @@ resource "aws_route53_record" "www" {
 
 }
 
+# Creating a certiciate for the chosen domain
+
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain_name
   validation_method = "DNS"
@@ -25,6 +31,7 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
+# Creating a DNS CNAME record
 
 resource "aws_route53_record" "cert_validation_record" {
   for_each = {
@@ -42,6 +49,7 @@ resource "aws_route53_record" "cert_validation_record" {
   ttl     = 60
 }
 
+# Ensuring the certificate is fully validatedd
 
 resource "aws_acm_certificate_validation" "cert_validation" {
   certificate_arn         = aws_acm_certificate.cert.arn

@@ -1,3 +1,5 @@
+# Creating the VPC
+
 resource "aws_vpc" "terraform_vpc" {
     cidr_block = var.vpc-cidr
     instance_tenancy = "default"
@@ -8,6 +10,8 @@ resource "aws_vpc" "terraform_vpc" {
   
 }
 
+# Creating the internet gateway
+
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.terraform_vpc.id
 
@@ -15,6 +19,8 @@ resource "aws_internet_gateway" "gw" {
     Name = "igw"
   }
 }
+
+# Creating the public and private subnets
 
 resource "aws_subnet" "public_1" {
   cidr_block              = var.subnet-cidrblock-pub1
@@ -58,6 +64,8 @@ resource "aws_subnet" "private_2" {
   }
 }
 
+# Creating the nat gateway
+
 resource "aws_nat_gateway" "nat_gw" {
   allocation_id = aws_eip.ngw_eip.id
   subnet_id     = aws_subnet.public_1.id
@@ -70,9 +78,13 @@ depends_on = [aws_internet_gateway.gw]
 
 }
 
+# Creating the elastic ip for the nat gateway
+
 resource "aws_eip" "ngw_eip" {
 
 }
+
+# Creating the public route table and relevant associations to public subnets
 
 resource "aws_route_table" "public_route" {
   vpc_id = aws_vpc.terraform_vpc.id
@@ -96,6 +108,8 @@ resource "aws_route_table_association" "public2" {
   subnet_id      = aws_subnet.public_2.id
   route_table_id = aws_route_table.public_route.id
 }
+
+# Creating the private route table and relevant associations to private subnets
 
 resource "aws_route_table" "private_route" {
   vpc_id = aws_vpc.terraform_vpc.id

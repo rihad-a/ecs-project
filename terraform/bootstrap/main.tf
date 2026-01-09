@@ -18,7 +18,7 @@ output "ns" {
   value = "${data.aws_route53_zone.networking.name_servers}"
  }
 
-## Linkage Of Route53 NS' to Cloudflare
+## Linkage Of Route53 Hosted Zone NS' to Cloudflare
 
  resource "cloudflare_dns_record" "route53-ns" {
   name    = "networking"
@@ -34,5 +34,3 @@ output "ns" {
 resource "aws_ecr_repository" "ecs-project" {
   name                 = "ecs-project"
 }
-
-

@@ -1,3 +1,5 @@
+# Creating the main ALB resource
+
 resource "aws_lb" "terraform-alb" {
   name               = "terraform-alb"
   internal           = false
@@ -10,6 +12,8 @@ resource "aws_lb" "terraform-alb" {
     Environment = "production"
   }
 }
+
+# Creating the ALB listeners
 
 resource "aws_lb_listener" "alb_listener_https" {
    load_balancer_arn    = aws_lb.terraform-alb.id
@@ -38,6 +42,8 @@ resource "aws_lb_listener" "alb_listener_http" {
   }
 }
 
+# Creating the ALB target group
+
 resource "aws_lb_target_group" "alb-tg" {
   name     = "alb-tg"
   port     = var.application-port
@@ -46,6 +52,8 @@ resource "aws_lb_target_group" "alb-tg" {
 
   vpc_id   = var.vpc_id
 }
+
+# Creating the ALB security group group
 
 resource "aws_security_group" "sg1" {
   name = "sg1"

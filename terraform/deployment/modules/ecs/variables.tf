@@ -1,4 +1,4 @@
-# --- General ---
+# --- General Variables ---
 
 variable "application-port" {
   type        = number
@@ -15,7 +15,7 @@ variable "http-port" {
   description = "The port for the HTTP listener"
 }
 
-# --- ecs creation ---
+# --- ECS Variables ---
 
 variable "ecs-container-name" {
   type        = string
@@ -32,7 +32,7 @@ variable "ecs-dockerport" {
   description = "The port the docker image uses"
 }
 
-# module variables
+# --- Module Variables ---
 
 variable "tg_arn" {
   type        = string

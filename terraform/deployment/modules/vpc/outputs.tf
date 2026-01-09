@@ -1,3 +1,5 @@
+# Output variables to be used in other modules
+
 output "vpc-id" {
   description = "VPC ID"
   value       = aws_vpc.terraform_vpc.id

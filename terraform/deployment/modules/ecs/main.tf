@@ -1,3 +1,5 @@
+# Creating an ECS cluster and attaching execution role
+
 resource "aws_ecs_cluster" "ecs-project" {
   name = "ecs-project"
 }
@@ -5,6 +7,8 @@ resource "aws_ecs_cluster" "ecs-project" {
 data "aws_iam_role" "ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }
+
+# Assigning a task definition
 
 resource "aws_ecs_task_definition" "ecs-docker" {
   family                   = "ecs-docker"
@@ -33,6 +37,8 @@ resource "aws_ecs_task_definition" "ecs-docker" {
   }
 }
 
+# Creating an ECS service
+
 resource "aws_ecs_service" "ecs-project" {
   name            = "ecs-project"
   cluster         = aws_ecs_cluster.ecs-project.id
@@ -51,6 +57,8 @@ resource "aws_ecs_service" "ecs-project" {
    security_groups = [aws_security_group.sg2.id]
  }
 }
+
+# Creating a security group
  
 resource "aws_security_group" "sg2" {
   name = "sg2"

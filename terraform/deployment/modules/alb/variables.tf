@@ -1,4 +1,4 @@
-# --- General ---
+# --- General Variables ---
 
 variable "application-port" {
   type        = number
@@ -15,7 +15,7 @@ variable "http-port" {
   description = "The port for the HTTP listener"
 }
 
-# module variables
+# --- Module Variables ---
 
 variable "vpc_id" {
   type        = string

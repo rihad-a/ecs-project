@@ -1,4 +1,4 @@
-# --- General ---
+# --- General Variables ---
 
 variable "domain_name" {
   type        = string
@@ -20,7 +20,7 @@ variable "http-port" {
   description = "The port for the HTTP listener"
 }
 
-# --- aws vpc ---
+# --- AWS VPC Variables ---
 
 variable "vpc-cidr" {
   type        = string
@@ -72,7 +72,7 @@ variable "subnet-map_public_ip_on_launch_private" {
   description = "Boolean to map public IP on launch for private subnets"
 }
 
-# --- ecs creation ---
+# --- ECS Variables ---
 
 variable "ecs-container-name" {
   type        = string

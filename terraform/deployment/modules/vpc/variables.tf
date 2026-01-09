@@ -1,4 +1,4 @@
-# --- aws vpc ---
+# --- AWS VPC Variables ---
 
 variable "vpc-cidr" {
   type        = string

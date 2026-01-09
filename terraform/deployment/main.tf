@@ -1,3 +1,5 @@
+# VPC Module
+
 module "aws_vpc" {
   source = "./modules/vpc"
 
@@ -14,6 +16,8 @@ subnet-map_public_ip_on_launch_private   = var.subnet-map_public_ip_on_launch_pr
 
 }
 
+# ALB Module
+
 module "alb" {
   source = "./modules/alb"
 
@@ -28,6 +32,8 @@ http-port                                = var.http-port
   subnetpub2_id     = module.aws_vpc.subnet-pub2
   certificate_arn   = module.route53.certificate_arn
 }
+
+# ECS Module
 
 module "ecs" {
   source = "./modules/ecs"
@@ -44,6 +50,8 @@ http-port                                = var.http-port
   subnetpri1_id     = module.aws_vpc.subnet-pri1
   vpc_id            = module.aws_vpc.vpc-id
 }
+
+# Route53 Module
 
 module "route53" {
   source = "./modules/route53"
