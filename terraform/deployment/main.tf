@@ -23,8 +23,6 @@ module "alb" {
 
 
 application-port                         = var.application-port
-https-port                               = var.https-port
-http-port                                = var.http-port
 
   # Use these outputs
   vpc_id            = module.aws_vpc.vpc-id
@@ -42,8 +40,6 @@ ecs-container-name                       = var.ecs-container-name
 ecs-image                                = var.ecs-image 
 ecs-dockerport                           = var.ecs-dockerport  
 application-port                         = var.application-port
-https-port                               = var.https-port
-http-port                                = var.http-port
 
   # Use these outputs
   tg_arn            = module.alb.tg_arn

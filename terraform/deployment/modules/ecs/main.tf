@@ -65,15 +65,15 @@ resource "aws_security_group" "sg2" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port        = var.http-port
-    to_port          = var.http-port
+    from_port        = 80
+    to_port          = 80
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }  
 
   ingress {
-    from_port        = var.https-port
-    to_port          = var.https-port
+    from_port        = 443
+    to_port          = 443
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }  

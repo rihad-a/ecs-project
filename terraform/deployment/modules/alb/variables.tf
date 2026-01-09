@@ -5,16 +5,6 @@ variable "application-port" {
   description = "The port for the application"
 }
 
-variable "https-port" {
-  type        = number
-  description = "The port for the HTTPS listener"
-}
-
-variable "http-port" {
-  type        = number
-  description = "The port for the HTTP listener"
-}
-
 # --- Module Variables ---
 
 variable "vpc_id" {

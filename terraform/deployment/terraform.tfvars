@@ -11,8 +11,6 @@ Terraform                              = "true"
 # --- General Variables ---
 domain_name                              = "networking.rihad.co.uk"
 application-port                         = 3000
-https-port                               = 443
-http-port                                = 80
 
 # --- AWS VPC Variables ---
 vpc-cidr                                 = "10.0.0.0/16"
