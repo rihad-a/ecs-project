@@ -1,3 +1,13 @@
+# --- AWS Tags Variable ---
+aws_tags = {
+
+Environment                            = "dev"
+Project                                = "ecs"
+Owner                                  = "rihad"
+Terraform                              = "true"
+
+}
+
 # --- General Variables ---
 domain_name                              = "networking.rihad.co.uk"
 application-port                         = 3000

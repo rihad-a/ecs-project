@@ -20,6 +20,11 @@ variable "http-port" {
   description = "The port for the HTTP listener"
 }
 
+variable "aws_tags" {
+  description = "Tags for Resources"
+  type        = map(string)
+}
+
 # --- AWS VPC Variables ---
 
 variable "vpc-cidr" {
