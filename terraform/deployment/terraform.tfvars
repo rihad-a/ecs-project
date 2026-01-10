@@ -30,4 +30,4 @@ ecs-image                                = "291759414346.dkr.ecr.eu-west-2.amazo
 ecs-dockerport                           = 3000
 ecs-memory                               = 2048
 ecs-cpu                                  = 1024
-ecs-desiredcount                         = 1
+ecs-desiredcount                         = 2
