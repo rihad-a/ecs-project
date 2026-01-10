@@ -2,6 +2,11 @@ name: Create and Push Image to ECR
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+    - main
+    paths:
+    - app
 permissions:
   contents: read
   security-events: write
