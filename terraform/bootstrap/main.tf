@@ -44,4 +44,50 @@ output "ns" {
 
 resource "aws_ecr_repository" "ecs-project" {
   name                 = "ecs-project"
+  image_tag_mutability = "IMMUTABLE_WITH_EXCLUSION"
+
+  image_tag_mutability_exclusion_filter {
+    filter      = "latest*"
+    filter_type = "WILDCARD"
+  }
+}
+
+
+resource "aws_ecr_lifecycle_policy" "ecs-project" {
+  repository = aws_ecr_repository.ecs-project.name
+
+  policy = <<EOF
+{
+  "rules": [
+    {
+      "rulePriority": 1,
+      "description": "Archive images not pulled in 30 days",
+      "selection": {
+        "tagStatus": "any",
+        "countType": "sinceImagePulled",
+        "countUnit": "days",
+        "countNumber": 30
+      },
+      "action": {
+        "type": "transition",
+        "targetStorageClass": "archive"
+      }
+    },
+    {
+      "rulePriority": 2,
+      "description": "Delete images archived for more than 90 days",
+      "selection": {
+        "tagStatus": "any",
+        "storageClass": "archive",
+        "countType": "sinceImageTransitioned",
+        "countUnit": "days",
+        "countNumber": 90
+      },
+      "action": {
+        "type": "expire"
+      }
+    }
+  ]
+}
+EOF
 }
