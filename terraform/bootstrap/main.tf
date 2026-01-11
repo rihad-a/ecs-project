@@ -52,7 +52,6 @@ resource "aws_ecr_repository" "ecs-project" {
   }
 }
 
-
 resource "aws_ecr_lifecycle_policy" "ecs-project" {
   repository = aws_ecr_repository.ecs-project.name
 
