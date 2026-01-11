@@ -69,22 +69,6 @@ The architecture comprises the following AWS services working together to provid
         └── terraformdestroy-pipeline.yml
 ```
 
-- **Docker File** (`app/`):
-    - **Dockerfile**: Multi-stage build that compiles the React TypeScript application and serves the optimised production build.
-
-- **Terraform Files** (`terraform/`):
-    - **bootstrap/**: Sets up OIDC provider and IAM roles for GitHub Actions (run once before main deployment).
-    - **deployment/modules/vpc**: Provisions VPC, subnets, and internet gateway.
-    - **deployment/modules/alb**: Configures Application Load Balancer with target groups.
-    - **deployment/modules/ecs**: Creates ECS cluster, task definitions, and Fargate services.
-    - **deployment/modules/route53**: Manages Route 53 DNS records and SSL certificates.
-
-- **CI/CD Pipelines** (`.github/workflows/`):
-    - **dockerimage-ecr.yml**: Builds and pushes Docker image to Amazon ECR.
-    - **terraformplan-pipeline.yml**: Previews Terraform configuration changes.
-    - **terraformapply-pipeline.yml**: Applies Terraform to provision AWS resources.
-    - **terraformdestroy-pipeline.yml**: Destroys Terraform-managed infrastructure.
-
 <br>
 
 
