@@ -2,11 +2,7 @@
 
 This project automates the deployment of the **Threat Composer Application** using **AWS ECS**, **Terraform**, **Docker**, and **CI/CD pipelines**. Originally set up manually using **AWS Console**, the process has been automated to provide a secure, scalable, and streamlined deployment.
 
-<br>
-
-## Overview
-
-The **Threat Composer Application** is a containerised React TypeScript application deployed on **AWS ECS Fargate**. This comprehensive threat modelling tool enables security professionals and architects to systematically identify, document, and mitigate threats to their systems. The deployment process is fully automated using **CI/CD pipelines** to handle Docker image building, security scans, and deployment to AWS through **Terraform**.
+The **Threat Composer Application** is a containerised React TypeScript application deployed on **AWS ECS Fargate**. This comprehensive threat modelling tool enables security professionals and architects to systematically identify, document, and mitigate threats to their systems.  tThe deployment process is fully automated using **CI/CD pipelines** to handle Docker image building, security scans, and deployment to AWShrough **Terraform**.
 
 <br>
 
@@ -70,8 +66,7 @@ The architecture comprises the following AWS services working together to provid
         ├── dockerimage-ecr.yml
         ├── terraformplan-pipeline.yml
         ├── terraformapply-pipeline.yml
-        ├── terraformdestroy-pipeline.yml
-        └── test-oidc-authentication.yml
+        └── terraformdestroy-pipeline.yml
 ```
 
 - **Docker File** (`app/`):
@@ -89,7 +84,6 @@ The architecture comprises the following AWS services working together to provid
     - **terraformplan-pipeline.yml**: Previews Terraform configuration changes.
     - **terraformapply-pipeline.yml**: Applies Terraform to provision AWS resources.
     - **terraformdestroy-pipeline.yml**: Destroys Terraform-managed infrastructure.
-    - **test-oidc-authentication.yml**: Verifies OIDC authentication configuration.
 
 <br>
 
@@ -106,24 +100,38 @@ Before deploying, ensure the following AWS prerequisites are met:
 - **Terraform**: Version 1.0 or later installed locally
 - **Docker**: Installed for building and testing Docker images locally
 
-### 2. GitHub Configuration
+### 2. GitHub Actions OIDC Configuration
+
+To enable GitHub Actions workflows to authenticate securely with AWS, configure OpenID Connect (OIDC)
+
+### 3. Domain Configuration
+
+Before setting up Terraform, you'll need a domain and Cloudflare configuration:
+
+- **Purchase Domain**: Register a domain through Cloudflare
+- **Cloudflare Credentials**: Locally configure the following as environment variables:
+    - **Cloudflare API Token**: Your Cloudflare API token for authentication
+    - **Cloudflare Zone ID**: The zone ID for your domain in Cloudflare
+
+### 4. Terraform Configuration
+
+Before deploying, customise the Terraform variables:
+
+- **Bootstrap Configuration** (`terraform/bootstrap/`):
+    - Configure the domain name you purchased in Cloudflare within `main.tf`
+    - Ensure your AWS CLI credentials are configured locally as environment variables
+
+- **Deployment Configuration** (`terraform/deployment/`):
+    - Update `terraform.tfvars` with your domain name and ECR Registry URL (from bootstrap output)
+    - Update `provider.tf` with the S3 bucket name from bootstrap output (used for Terraform state backend)
+
+### 5. GitHub Configuration
 
 For automated CI/CD deployment:
 
 - **GitHub Repository**: Repository with this project code
-- **GitHub Secrets**: Configure the following secrets:
-    - `AWS_ROLE_ARN`: IAM role for GitHub Actions (created during bootstrap)
-    - `AWS_REGION`: AWS region (e.g., `eu-west-2`)
-
-### 3. Terraform State Management
-
-- **S3 Bucket**: Created for storing Terraform state files (optional but recommended)
-- **State Locking**: Consider using DynamoDB for state locking in shared environments
-
-### 4. Domain Configuration
-
-- **Custom Domain**: (Optional) Register a custom domain in Route 53 for accessing the application
-- **SSL Certificate**: Route 53 automatically manages SSL certificates with HTTPS validation
+- **GitHub Secrets**: Configure the following secret:
+    - `ECR_REPOSITORY`: The Amazon ECR registry URL from bootstrap output (e.g., `123456789012.dkr.ecr.eu-west-2.amazonaws.com/abcdefg`)
 
 <br>
 
@@ -147,9 +155,6 @@ The deployment process is fully automated via GitHub Actions:
 4. **Terraform Destroy** (`terraformdestroy-pipeline.yml`):
     - Destroys all Terraform-managed resources when necessary
 
-5. **OIDC Authentication Test** (`test-oidc-authentication.yml`):
-    - Verifies GitHub Actions-to-AWS OIDC authentication
-
 To trigger any of these workflows, go to **GitHub Actions** and manually run the desired workflow.
 
 <br>
@@ -164,15 +169,16 @@ terraform init
 terraform apply
 ```
 
-Note the outputs, particularly the GitHub Actions IAM role ARN.
+Note the outputs from the bootstrap phase:
+- **S3 Bucket Name**: Used for storing Terraform state files
+- **ECR Registry URL**: The Amazon ECR repository URL for Docker images (required for Step 2)
 
-### Step 2: Configure GitHub Actions Variables
+### Step 2: Configure GitHub Actions Secrets
 
 In your GitHub repository settings:
-1. Go to **Settings** → **Secrets and variables** → **Actions** → **Variables**
-2. Create the following variables:
-   - `AWS_ROLE_ARN`: From bootstrap output
-   - `AWS_REGION`: Your AWS region (e.g., `eu-west-2`)
+1. Go to **Settings** → **Secrets and variables** → **Actions** → **Secrets**
+2. Create the following secret:
+   - `ECR_REPOSITORY`: The ECR Registry URL from Step 1 bootstrap output
 
 ### Step 3: Deploy Infrastructure
 
@@ -181,13 +187,6 @@ In your GitHub repository settings:
 3. Click **Run workflow**
 4. Once review is complete, click **Terraform Apply**
 5. Click **Run workflow**
-
-This will:
-- Create the VPC with public and private subnets
-- Set up the Application Load Balancer
-- Provision the ECS Fargate cluster and service
-- Configure Route 53 DNS records
-- Manage SSL/TLS certificates
 
 ### Step 4: Update Application Code (Optional)
 
