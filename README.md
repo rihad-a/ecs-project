@@ -2,7 +2,7 @@
 
 This project automates the deployment of the **Threat Composer Application** using **AWS ECS**, **Terraform**, **Docker**, and **CI/CD pipelines**. Originally set up manually using **AWS Console**, the process has been automated to provide a secure, scalable, and streamlined deployment.
 
-The **Threat Composer Application** is a containerised React TypeScript application deployed on **AWS ECS Fargate**. This comprehensive threat modelling tool enables security professionals and architects to systematically identify, document, and mitigate threats to their systems.  tThe deployment process is fully automated using **CI/CD pipelines** to handle Docker image building, security scans, and deployment to AWShrough **Terraform**.
+The **Threat Composer Application** is a containerised React TypeScript application deployed on **AWS ECS Fargate**. This comprehensive threat modelling tool enables security professionals and architects to systematically identify, document, and mitigate threats to their systems.  The deployment process is fully automated using **CI/CD pipelines** to handle Docker image building, security scans, and deployment to AWShrough **Terraform**.
 
 <br>
 
